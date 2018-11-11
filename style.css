@@ -150,7 +150,21 @@ li:hover {
     border-bottom-right-radius: 10px;
 }
 
-.deleteButton:hover {
+.editButton {
+    background-color: green;
+    height: 100%;
+    width: 30px;
+    position: absolute;
+    right: 30px;
+    border: 0;
+    color: #FFF;
+    cursor: pointer;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.deleteButton:hover,
+.editButton:hover {
     font-weight: bold;
 }
 

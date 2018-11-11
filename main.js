@@ -20,17 +20,17 @@ const addTask = () => {
 
     if (text.length > 0) {
         for (let i = 0; i < arr.length; i++) {
-            if (arr[i].textContent.slice(0, -1) === text) {
+            if (arr[i] === text) {
                 alert.textContent = 'To wpis został dodany wcześniej! Wymyśl inny.';
                 alert.style.color = 'red';
                 input.value = '';
                 return;
             }
         }
+        arr.push(text);
         const element = document.createElement('li');
-        element.innerHTML = text + '<button class="deleteButton">X</button>';
+        element.innerHTML = arr[arr.indexOf(text)] + '<button class="editButton">...</button>' + '<button class="deleteButton">X</button>';
         const item = list.appendChild(element);
-        arr.push(item);
         input.value = '';
         search.value = '';
         alert.style.color = 'green';
@@ -47,18 +47,10 @@ const addTask = () => {
     deleteBtn.forEach(element => {
         element.addEventListener('click', removeTask);
     })
-    //CONFIRM CLICKED ELEMENT
-    arr.forEach(li => {
-        li.onclick = () => {
-            li.classList.toggle('clicked');
-            if (li.classList.contains('clicked')) {
-                alert.textContent = 'Kliknij na wpis by anulować, bądź X by potwierdzić i usunąć.';
-                alert.style.color = 'red';
-            } else alert.textContent = '';
-        }
-
+    const editBtn = [...document.querySelectorAll('.editButton')];
+    editBtn.forEach(element => {
+        element.addEventListener('click', editTask);
     })
-
     const inputAlert = () => {
         input.addEventListener('change', () => {
             if (text.length > 20) {
@@ -68,8 +60,25 @@ const addTask = () => {
         })
     }
     inputAlert();
+    clicked();
+
 }
 button.addEventListener('click', addTask);
+
+//CONFIRM CLICKED ELEMENT
+const clicked = () => {
+    const items = [...list.children];
+    items.forEach(li => {
+        li.onclick = () => {
+            li.classList.toggle('clicked');
+            if (li.classList.contains('clicked')) {
+                alert.textContent = 'Kliknij na wpis by anulować, bądź X by potwierdzić i usunąć.';
+                alert.style.color = 'red';
+            } else alert.textContent = '';
+        }
+
+    })
+}
 
 //USE ENTER AS SUBMIT
 window.addEventListener('keydown', (e) => {
@@ -84,29 +93,66 @@ const removeTask = (e) => {
         e.target.parentNode.remove();
         const removed = arr.splice(arr.indexOf(e.target.parentNode), 1);
         search.value = '';
-        tasks.innerHTML = 'Ilość wpisów: ' + arr.length + '<br>' + '<br>' + time + '<br>' + 'Usunięto wpis: ' + '<br>' + "'" + removed[0].textContent.slice(0, -1) + "'";
+        tasks.innerHTML = 'Ilość wpisów: ' + arr.length + '<br>' + '<br>' + time + '<br>' + 'Usunięto wpis: ' + '<br>' + "'" + removed + "'";
         tasks.style.color = 'blue';
     }
 };
 
 const searchTask = () => {
-    const searchText = search.value.toLowerCase();
-    const filtered = arr.filter(li => li.textContent.toLowerCase().includes(searchText));
-    list.textContent = '';
-    filtered.forEach(li => list.appendChild(li));
+    if (search.value === 0 || search.value === '') {
+        list.innerHTML = '';
+
+        for (let i = 0; i < arr.length; i++) {
+            const element = document.createElement('li');
+            element.innerHTML = arr[i] + '<button class="editButton">...</button>' + '<button class="deleteButton">X</button>';
+            list.appendChild(element)
+        }
+
+    } else {
+        const searchText = search.value.toLowerCase();
+        const filtered = arr.filter(li => li.toLowerCase().includes(searchText));
+        list.textContent = '';
+        const element = document.createElement('li');
+        element.innerHTML = arr[arr.indexOf(filtered[0])] + '<button class="editButton">...</button>' + '<button class="deleteButton">X</button>';
+        filtered.forEach(li => list.appendChild(element));
+    }
+    clicked();
+
+    const deleteBtn = [...document.querySelectorAll('.deleteButton')];
+    deleteBtn.forEach(element => {
+        element.addEventListener('click', removeTask);
+    })
+    const editBtn = [...document.querySelectorAll('.editButton')];
+    editBtn.forEach(element => {
+        element.addEventListener('click', editTask);
+    })
 }
 search.addEventListener('input', searchTask);
+
+const editTask = (e) => {
+    const changedText = prompt('Wpisz nową nazwę zadania.');
+    const content = e.target.parentNode.textContent.slice(0, -4);
+    arr[arr.indexOf(content)] = changedText;
+    e.target.parentNode.classList.toggle('clicked');
+    e.target.parentNode.innerHTML = changedText + '<button class="editButton">...</button>' + '<button class="deleteButton">X</button>';
+
+    const deleteBtn = [...document.querySelectorAll('.deleteButton')];
+    deleteBtn.forEach(element => {
+        element.addEventListener('click', removeTask);
+    })
+    const editBtn = [...document.querySelectorAll('.editButton')];
+    editBtn.forEach(element => {
+        element.addEventListener('click', editTask);
+    })
+}
 
 //LOCAL STORAGE OPTIONS
 const storage = () => {
     const saveStorage = () => {
         saveBtn.addEventListener('click', () => {
             localStorage.setItem('lagowskiTodo', list.innerHTML);
-
-            //SAVE ARR TO FILE
-            console.log('Do wysłania aktualna zawartość zmiennej (tablicy) "arr" czyli to co poniżej');
-            console.log(arr)
-            /* W tym miejscu potrzebuje przesłać */
+            const arrToString = JSON.stringify(arr);
+            localStorage.setItem('lagowskiTodoArr', arrToString);
         });
     }
     saveStorage();
@@ -114,8 +160,20 @@ const storage = () => {
     const loadStorage = () => {
         loadBtn.addEventListener('click', () => {
             const savedItem = localStorage.getItem('lagowskiTodo');
-            console.log(savedItem)
+            const savedArr = localStorage.getItem('lagowskiTodoArr');
+            const parsedArr = JSON.parse(savedArr);
             list.innerHTML = savedItem;
+            arr = parsedArr;
+
+            const deleteBtn = [...document.querySelectorAll('.deleteButton')];
+            deleteBtn.forEach(element => {
+                element.addEventListener('click', removeTask);
+            })
+            const editBtn = [...document.querySelectorAll('.editButton')];
+            editBtn.forEach(element => {
+                element.addEventListener('click', editTask);
+            })
+            clicked();
         })
 
 
