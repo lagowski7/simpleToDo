@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Simple TODO</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+    <div class="app">
+        <input class="search" type="text" placeholder="Wyszukaj wpis..." required maxlength="20">
+        <button class="button">Dodaj wpis</button>
+        <input class="input" type="text" placeholder="Nazwa wpisu..." required maxlength="20">
+        <div class="tasks">Wpisz nazwę i naciśnij powyższy przycisk lub Enter.</div>
+        <hr>
+        <div class="alert"></div>
+        <button class="saveBtn">Zapisz listę</button>
+        <button class="loadBtn">Wczytaj listę</button>
+        <button class="clearBtn">Wyczyść listę</button>
+        <ol class="list"></ol>
+    </div>
+    <script src="main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,163 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-size: 16px;
+    background-color: #3C97BF;
+}
+
+.app {
+    position: absolute;
+    top: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: monospace;
+    font-size: 3rem;
+    color: #FFF;
+    width: 500px;
+    background-color: #FFF;
+    text-align: center;
+    box-shadow: 0px 2px 16px -7px rgba(0, 0, 0, 0.75);
+}
+
+.button,
+.saveBtn,
+.loadBtn,
+.clearBtn {
+    border: 2px solid#3C97BF;
+    background-color: transparent;
+    height: 80px;
+    width: 25%;
+    cursor: pointer;
+    color: rgb(145, 145, 145);
+    margin: 5px 5px;
+    transition: box-shadow .5s ease;
+}
+
+.button:hover,
+.saveBtn:hover,
+.loadBtn:hover,
+.clearBtn:hover {
+    box-shadow: inset 0 0 0 10px #3C97BF;
+}
+
+
+.saveBtn,
+.loadBtn,
+.clearBtn {
+    width: 25%;
+    height: 50px;
+}
+
+.input,
+.search {
+    height: 50px;
+    font-size: 2rem;
+    background-color: transparent;
+    color: rgb(145, 145, 145);
+    border: 2px solid#DDD;
+    margin: 5% 0;
+}
+
+.input {
+    width: 60%;
+}
+
+.search {
+    width: 95%;
+}
+
+.input:required,
+.input:invalid,
+.search:required,
+.search:invalid {
+    box-shadow: none;
+}
+
+ol {
+    display: flex;
+    max-width: 100%;
+    height: 100%;
+    flex-direction: column;
+    border-top: 2px dashed #FFF;
+    margin-top: 50px;
+    list-style-position: inside;
+}
+
+li {
+    text-align: left;
+    position: relative;
+    border-top: 1px solid #FFF;
+    border-bottom: 1px solid #06668F;
+    padding-left: 5px;
+    background-color: skyblue;
+    font-size: 2rem;
+    font-weight: bold;
+    height: 100%;
+    width: 100%;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    cursor: pointer;
+    transition: all .5s ease-out;
+    -webkit-touch-callout: none;
+    /* iOS Safari */
+    -webkit-user-select: none;
+    /* Safari */
+    -khtml-user-select: none;
+    /* Konqueror HTML */
+    -moz-user-select: none;
+    /* Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
+    user-select: none;
+}
+
+li:first-of-type {
+    border-top: 0;
+}
+
+li:hover {
+    background-color: #06668F;
+}
+
+.alert,
+.tasks {
+    margin: 20px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    background-color: transparent;
+    min-height: 150px;
+}
+
+.alert {
+    min-height: 85px;
+}
+
+.tasks {
+    color: blue;
+}
+
+.deleteButton {
+    background-color: red;
+    height: 100%;
+    width: 30px;
+    position: absolute;
+    right: 0;
+    border: 0;
+    color: #FFF;
+    cursor: pointer;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.deleteButton:hover {
+    font-weight: bold;
+}
+
+.clicked {
+    text-decoration-line: line-through;
+}
+
+hr {
+    color: transparent;
+}
