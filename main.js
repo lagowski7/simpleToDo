@@ -103,6 +103,10 @@ const storage = () => {
         saveBtn.addEventListener('click', () => {
             localStorage.setItem('lagowskiTodo', list.innerHTML);
 
+            //SAVE ARR TO FILE
+            console.log('Do wysłania aktualna zawartość zmiennej (tablicy) "arr" czyli to co poniżej');
+            console.log(arr)
+            /* W tym miejscu potrzebuje przesłać */
         });
     }
     saveStorage();
